@@ -1,0 +1,96 @@
+alias: Motorvärmare
+description: ""
+trigger:
+  - platform: time
+    at: "05:00:00"
+  - platform: time
+    at: "06:00:00"
+  - platform: time
+    at: "06:30:00"
+  - platform: time
+    at: "08:00:00"
+condition: []
+action:
+  - if:
+      - condition: time
+        before: "05:01:00"
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+        after: "04:59:00"
+      - type: is_temperature
+        condition: device
+        device_id: 5a49294f3c75c37e393cb10db7f32f1e
+        entity_id: sensor.temp_kontor_temperature
+        domain: sensor
+        below: -10
+    then:
+      - type: turn_on
+        device_id: 7faca3058d61e93ca19b29601db85cb6
+        entity_id: switch.element
+        domain: switch
+    alias: Kl 5 -10
+  - if:
+      - condition: time
+        before: "06:01:00"
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+        after: "05:59:00"
+      - type: is_temperature
+        condition: device
+        device_id: 5a49294f3c75c37e393cb10db7f32f1e
+        entity_id: sensor.temp_kontor_temperature
+        domain: sensor
+        below: -5
+    then:
+      - type: turn_on
+        device_id: 7faca3058d61e93ca19b29601db85cb6
+        entity_id: switch.element
+        domain: switch
+    alias: Kl 6 -5
+  - if:
+      - condition: time
+        before: "06:31:00"
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+        after: "06:29:00"
+      - type: is_temperature
+        condition: device
+        device_id: 5a49294f3c75c37e393cb10db7f32f1e
+        entity_id: sensor.temp_kontor_temperature
+        domain: sensor
+        below: 0
+    then:
+      - type: turn_on
+        device_id: 7faca3058d61e93ca19b29601db85cb6
+        entity_id: switch.element
+        domain: switch
+    alias: Kl 6.30 0
+  - if:
+      - condition: time
+        before: "08:01:00"
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+        after: "07:59:00"
+    then:
+      - type: turn_off
+        device_id: 7faca3058d61e93ca19b29601db85cb6
+        entity_id: switch.element
+        domain: switch
+    alias: Kl 8 av
+mode: single
